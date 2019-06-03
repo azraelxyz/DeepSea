@@ -2,6 +2,7 @@ from mock import patch
 import pytest
 from srv.modules.runners import status
 from tests.unit.helper.output import OutputHelper
+import six
 
 
 class TestStatusReport():
@@ -49,10 +50,10 @@ class TestStatusReport():
 
             # if reverse, set the data to the old_values
             if reverse:
-                for node,value in data.iteritems():
+                for node,value in six.iteritems(data):
                     data[node] = data[node].replace(ov, cv)
 
-            for count, (node, value) in enumerate(data.iteritems(), 0):
+            for count, (node, value) in enumerate(six.iteritems(data), 0):
                 if count < recurrence:
                     data[node] = ov
                     if node not in expect['statusreport'][1]['out of sync']:
@@ -61,7 +62,6 @@ class TestStatusReport():
 
         return salt_versions, os_codenames, ceph_versions, expect
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_4_of_9(self, data):
         """
@@ -84,7 +84,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 4
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_3_of_9(self, data):
         """
@@ -106,7 +105,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 3
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_1_of_9(self, data):
         """
@@ -128,7 +126,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 1
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_0_of_9(self, data):
         """
@@ -150,7 +147,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 0
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_5_of_9(self, data):
         """
@@ -176,7 +172,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 4
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_6_of_9(self, data):
         """
@@ -202,7 +197,6 @@ class TestStatusReport():
         assert ret == expect
         assert len(ret['statusreport'][1]['out of sync'].keys()) == 3
 
-    @pytest.mark.skip()
     @patch('srv.modules.runners.status._get_data')
     def test_report_9_of_9(self, data):
         """
